@@ -9,8 +9,29 @@ MongoClient.connect(connectionURL,{ useNewUrlParser: true ,useUnifiedTopology : 
         return console.log('Unable to connect to database !')
     }
     const db = client.db(databaseName)
-    db.collection('users').insertOne({
-        name: 'Sarath Kumar',
-        age: 27
+    // db.collection('users').insertOne({
+    //     name: 'Sarath Kumar',
+    //     age: 27
+    // },(error, result)=>{
+    //     if(error){
+    //         return console.log('Unable to insert User')
+    //     }
+
+    //     console.log(result.ops)
+    // })
+    db.collection('users').insertMany([
+        {
+            name: 'Nehalika',
+            age: 20
+        },
+        {
+            name: 'Mannam',
+            age:20
+        }
+    ],(error, result)=>{
+        if(error){
+            return console.log('Unable to insert users')
+        }
+        console.log(result.ops)
     })
 })
