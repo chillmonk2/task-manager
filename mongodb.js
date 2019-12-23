@@ -1,5 +1,5 @@
-const mongodb = require('mongodb')
-const MongoClient = mongodb.MongoClient
+const {MongoClient, ObjectID } = require('mongodb')
+//const MongoClient = mongodb.MongoClient
 
 const connectionURL = 'mongodb://127.0.0.1:27017'//CONNECT TO LOCALHOST
 const databaseName = 'task-manager'
@@ -9,6 +9,8 @@ MongoClient.connect(connectionURL,{ useNewUrlParser: true ,useUnifiedTopology : 
         return console.log('Unable to connect to database !')
     }
     const db = client.db(databaseName)
+
+    //const lastObject = new ObjectID('5e00dd6fc6e9e637cb762c57')
     // db.collection('users').insertOne({
     //     name: 'Sarath Kumar',
     //     age: 27
@@ -34,23 +36,37 @@ MongoClient.connect(connectionURL,{ useNewUrlParser: true ,useUnifiedTopology : 
     //     }
     //     console.log(result.ops)
     // })
-    db.collection('tasks').insertMany([
-        {
-            description: 'Complete Nodejs',
-            completed: false
-        },
-        {
-            description: 'Cover GRE Syllabus',
-            completed: false
-        },
-        {
-            description: 'Reschedule Passport Appointment',
-            completed: true
-        }
-    ],(error, result)=>{
+    // db.collection('tasks').insertMany([
+    //     {
+    //         description: 'Complete Nodejs',
+    //         completed: false
+    //     },
+    //     {
+    //         description: 'Cover GRE Syllabus',
+    //         completed: false
+    //     },
+    //     {
+    //         description: 'Reschedule Passport Appointment',
+    //         completed: true
+    //     }
+    // ],(error, result)=>{
+    //     if(error){
+    //         return console.log('Unable to insert tasks')
+    //     }
+    //     console.log(result.ops)
+    // })
+    //console.log(lastObject)
+    db.collection('tasks').findOne({ _id: new ObjectID("5e00dd6fc6e9e637cb762c57")},(error,task)=>{
         if(error){
-            return console.log('Unable to insert tasks')
+            return console.log('An Error occured while Searching')
         }
-        console.log(result.ops)
+        console.log(task)
+    })
+
+    db.collection('tasks').find({completed: false}).toArray((error,tasks)=>{
+        if(error){
+            return console.log('An Error occured while Searching')
+        }
+        console.log(tasks)
     })
 })
