@@ -56,6 +56,7 @@ MongoClient.connect(connectionURL,{ useNewUrlParser: true ,useUnifiedTopology : 
     //     console.log(result.ops)
     // })
     //console.log(lastObject)
+    //Querying Documents
     db.collection('tasks').findOne({ _id: new ObjectID("5e00dd6fc6e9e637cb762c57")},(error,task)=>{
         if(error){
             return console.log('An Error occured while Searching')
