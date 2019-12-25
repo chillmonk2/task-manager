@@ -10,6 +10,20 @@ MongoClient.connect(connectionURL,{ useNewUrlParser: true ,useUnifiedTopology : 
     }
     const db = client.db(databaseName)
 
+    const updatePromise = db.collection('tasks').updateMany({
+        completed : false
+    },
+    {
+        $set :{
+            completed: true
+            }
+    })
+    updatePromise.then((result)=>{
+        console.log(result.modifiedCount)
+    }).catch((error)=> {
+        console.log(error)
+    })
+
     //const lastObject = new ObjectID('5e00dd6fc6e9e637cb762c57')
     // db.collection('users').insertOne({
     //     name: 'Sarath Kumar',
@@ -57,17 +71,17 @@ MongoClient.connect(connectionURL,{ useNewUrlParser: true ,useUnifiedTopology : 
     // })
     //console.log(lastObject)
     //Querying Documents
-    db.collection('tasks').findOne({ _id: new ObjectID("5e00dd6fc6e9e637cb762c57")},(error,task)=>{
-        if(error){
-            return console.log('An Error occured while Searching')
-        }
-        console.log(task)
-    })
+    // db.collection('tasks').findOne({ _id: new ObjectID("5e00dd6fc6e9e637cb762c57")},(error,task)=>{
+    //     if(error){
+    //         return console.log('An Error occured while Searching')
+    //     }
+    //     console.log(task)
+    // })
 
-    db.collection('tasks').find({completed: false}).toArray((error,tasks)=>{
-        if(error){
-            return console.log('An Error occured while Searching')
-        }
-        console.log(tasks)
-    })
+    // db.collection('tasks').find({completed: false}).toArray((error,tasks)=>{
+    //     if(error){
+    //         return console.log('An Error occured while Searching')
+    //     }
+    //     console.log(tasks)
+    // })
 })
