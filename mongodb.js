@@ -9,20 +9,31 @@ MongoClient.connect(connectionURL,{ useNewUrlParser: true ,useUnifiedTopology : 
         return console.log('Unable to connect to database !')
     }
     const db = client.db(databaseName)
+    
+    //Deleting the Document
 
-    const updatePromise = db.collection('tasks').updateMany({
-        completed : false
-    },
-    {
-        $set :{
-            completed: true
-            }
-    })
-    updatePromise.then((result)=>{
-        console.log(result.modifiedCount)
-    }).catch((error)=> {
+    db.collection('tasks').deleteOne({
+        description: 'Reschedule Passport Appointment'
+    }).then((result) => {
+        console.log(result.deletedCount)
+    }).catch((error)=>{
         console.log(error)
     })
+
+    //  Updating the Document
+    // const updatePromise = db.collection('tasks').updateMany({
+    //     completed : false
+    // },
+    // {
+    //     $set :{
+    //         completed: true
+    //         }
+    // })
+    // updatePromise.then((result)=>{
+    //     console.log(result.modifiedCount)
+    // }).catch((error)=> {
+    //     console.log(error)
+    // })
 
     //const lastObject = new ObjectID('5e00dd6fc6e9e637cb762c57')
     // db.collection('users').insertOne({
